@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rse_bot">
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.04"/>
+
+  <material name="body_blue"><color rgba="0.12 0.34 0.90 1"/></material>
+  <material name="front_orange"><color rgba="1.0 0.62 0.02 1"/></material>
+  <material name="wheel_black"><color rgba="0.08 0.08 0.08 1"/></material>
+  <material name="sensor_dark"><color rgba="0.12 0.12 0.12 1"/></material>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.42 0.30 0.10"/></geometry>
+      <material name="body_blue"/>
+    </visual>
+    <visual>
+      <origin xyz="0.215 0 0.035" rpy="0 0 0"/>
+      <geometry><box size="0.03 0.20 0.045"/></geometry>
+      <material name="front_orange"/>
+    </visual>
+  </link>
+
+  <link name="left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      <material name="wheel_black"/>
+    </visual>
+  </link>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0.15 0.17 -0.065" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      <material name="wheel_black"/>
+    </visual>
+  </link>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0.15 -0.17 -0.065" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="caster_link">
+    <visual>
+      <geometry><sphere radius="0.035"/></geometry>
+      <material name="sensor_dark"/>
+    </visual>
+  </link>
+
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_link"/>
+    <origin xyz="-0.16 0 -0.105" rpy="0 0 0"/>
+  </joint>
+
+  <link name="lidar_link">
+    <visual>
+      <geometry><cylinder radius="0.045" length="0.055"/></geometry>
+      <material name="sensor_dark"/>
+    </visual>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.15 0 0.11" rpy="0 0 0"/>
+  </joint>
+</robot>
