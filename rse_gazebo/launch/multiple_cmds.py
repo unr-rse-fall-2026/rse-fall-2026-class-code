@@ -13,6 +13,7 @@ from launch_ros.actions import Node
 def generate_launch_description() -> LaunchDescription:
     package_share = Path(get_package_share_directory("rse_gazebo"))
 
+
     ttk = Node(
         package="teleop_twist_keyboard",
         executable="teleop_twist_keyboard",
@@ -20,6 +21,9 @@ def generate_launch_description() -> LaunchDescription:
         output="screen",
         prefix = 'xterm -e',
         parameters=[],
+        remappings=[
+            ('cmd_vel', '/cmd_vel/keyboard')
+        ],
     )
 
     joy = Node(
@@ -29,10 +33,25 @@ def generate_launch_description() -> LaunchDescription:
         output="screen",
     )
 
+    mux_config = str(
+        package_share / 'config' / 'twist_mux.yaml'
+    )
+
+    mux = Node(
+        package='twist_mux',
+        executable='twist_mux',
+        name='twist_mux',
+        parameters=[mux_config, {'use_stamped': False}],
+        remappings=[
+            ('cmd_vel_out', '/cmd_vel')
+        ],
+        output='screen'
+    )
 
     return LaunchDescription(
         [
             ttk,
-            joy
+            joy,
+            mux
         ]
     )
