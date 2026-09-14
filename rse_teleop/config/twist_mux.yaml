@@ -1,0 +1,21 @@
+twist_mux:
+  ros__parameters:
+    topics:
+      joystick:
+        topic: /cmd_vel/joystick
+        timeout: 0.5
+        priority: 100
+      keyboard:
+        topic: /cmd_vel/keyboard
+        timeout: 0.5
+        priority: 50
+      autonomy:
+        topic: /cmd_vel/auto
+        timeout: 0.5
+        priority: 10
+
+    locks:
+      emergency_stop:
+        topic: /e_stop
+        timeout: 0.0
+        priority: 255
