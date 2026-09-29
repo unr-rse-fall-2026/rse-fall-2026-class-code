@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
                 'scan_parser = rse_obstacles.scan_parser:main',
+                'auto_controller = rse_obstacles.auto_controller:main',
                 'extra_code = rse_obstacles.extra_code:main',
         ],
     },
